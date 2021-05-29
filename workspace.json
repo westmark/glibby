@@ -1,0 +1,129 @@
+{
+  "version": 2,
+  "cli": {
+    "defaultCollection": "@nrwl/react"
+  },
+  "defaultProject": "glibby-site",
+  "generators": {
+    "@nrwl/react": {
+      "application": {
+        "style": "styled-components",
+        "linter": "eslint",
+        "strict": true,
+        "babel": true
+      },
+      "component": {
+        "style": "styled-components"
+      },
+      "library": {
+        "style": "styled-components",
+        "linter": "eslint",
+        "strict": true
+      }
+    }
+  },
+  "projects": {
+    "glibby-site": {
+      "root": "apps/glibby-site",
+      "sourceRoot": "apps/glibby-site/src",
+      "projectType": "application",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/glibby-site",
+            "index": "apps/glibby-site/src/index.html",
+            "main": "apps/glibby-site/src/main.tsx",
+            "polyfills": "apps/glibby-site/src/polyfills.ts",
+            "tsConfig": "apps/glibby-site/tsconfig.app.json",
+            "assets": [
+              "apps/glibby-site/src/favicon.ico",
+              "apps/glibby-site/src/assets"
+            ],
+            "styles": [],
+            "scripts": [],
+            "webpackConfig": "@nrwl/react/plugins/webpack"
+          },
+          "configurations": {
+            "production": {
+              "fileReplacements": [
+                {
+                  "replace": "apps/glibby-site/src/environments/environment.ts",
+                  "with": "apps/glibby-site/src/environments/environment.prod.ts"
+                }
+              ],
+              "optimization": true,
+              "outputHashing": "all",
+              "sourceMap": false,
+              "extractCss": true,
+              "namedChunks": false,
+              "extractLicenses": true,
+              "vendorChunk": false,
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                }
+              ]
+            }
+          }
+        },
+        "serve": {
+          "executor": "@nrwl/web:dev-server",
+          "options": {
+            "buildTarget": "glibby-site:build",
+            "hmr": true
+          },
+          "configurations": {
+            "production": {
+              "buildTarget": "glibby-site:build:production",
+              "hmr": false
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/glibby-site/**/*.{ts,tsx,js,jsx}"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/glibby-site"],
+          "options": {
+            "jestConfig": "apps/glibby-site/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      }
+    },
+    "glibby-site-e2e": {
+      "root": "apps/glibby-site-e2e",
+      "sourceRoot": "apps/glibby-site-e2e/src",
+      "projectType": "application",
+      "targets": {
+        "e2e": {
+          "executor": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/glibby-site-e2e/cypress.json",
+            "tsConfig": "apps/glibby-site-e2e/tsconfig.e2e.json",
+            "devServerTarget": "glibby-site:serve"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "glibby-site:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["apps/glibby-site-e2e/**/*.{js,ts}"]
+          }
+        }
+      }
+    }
+  }
+}
