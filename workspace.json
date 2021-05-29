@@ -124,6 +124,69 @@
           }
         }
       }
+    },
+    "glibby-core": {
+      "root": "libs/glibby-core",
+      "sourceRoot": "libs/glibby-core/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/node:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/glibby-core",
+            "tsConfig": "libs/glibby-core/tsconfig.lib.json",
+            "packageJson": "libs/glibby-core/package.json",
+            "main": "libs/glibby-core/src/index.ts",
+            "assets": ["libs/glibby-core/*.md"]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": ["libs/glibby-core/**/*.ts"]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/glibby-core"],
+          "options": {
+            "jestConfig": "libs/glibby-core/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/glibby-core/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/glibby-core",
+            "config": {
+              "configFolder": "libs/glibby-core/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
     }
   }
 }
