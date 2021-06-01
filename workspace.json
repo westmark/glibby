@@ -125,26 +125,107 @@
         }
       }
     },
+    "glibby-grid-animation": {
+      "root": "libs/glibby-grid-animation",
+      "sourceRoot": "libs/glibby-grid-animation/src",
+      "projectType": "library",
+      "targets": {
+        "build": {
+          "executor": "@nrwl/web:package",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/libs/glibby-grid-animation",
+            "tsConfig": "libs/glibby-grid-animation/tsconfig.lib.json",
+            "project": "libs/glibby-grid-animation/package.json",
+            "entryFile": "libs/glibby-grid-animation/src/index.ts",
+            "external": ["react", "react-dom"],
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "libs/glibby-grid-animation/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
+          }
+        },
+        "lint": {
+          "executor": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "libs/glibby-grid-animation/**/*.{ts,tsx,js,jsx}"
+            ]
+          }
+        },
+        "test": {
+          "executor": "@nrwl/jest:jest",
+          "outputs": ["coverage/libs/glibby-grid-animation"],
+          "options": {
+            "jestConfig": "libs/glibby-grid-animation/jest.config.js",
+            "passWithNoTests": true
+          }
+        },
+        "storybook": {
+          "executor": "@nrwl/storybook:storybook",
+          "options": {
+            "uiFramework": "@storybook/react",
+            "port": 4400,
+            "config": {
+              "configFolder": "libs/glibby-grid-animation/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        },
+        "build-storybook": {
+          "executor": "@nrwl/storybook:build",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "uiFramework": "@storybook/react",
+            "outputPath": "dist/storybook/glibby-grid-animation",
+            "config": {
+              "configFolder": "libs/glibby-grid-animation/.storybook"
+            }
+          },
+          "configurations": {
+            "ci": {
+              "quiet": true
+            }
+          }
+        }
+      }
+    },
     "glibby-core": {
       "root": "libs/glibby-core",
       "sourceRoot": "libs/glibby-core/src",
       "projectType": "library",
       "targets": {
         "build": {
-          "executor": "@nrwl/node:package",
+          "executor": "@nrwl/web:package",
           "outputs": ["{options.outputPath}"],
           "options": {
             "outputPath": "dist/libs/glibby-core",
             "tsConfig": "libs/glibby-core/tsconfig.lib.json",
-            "packageJson": "libs/glibby-core/package.json",
-            "main": "libs/glibby-core/src/index.ts",
-            "assets": ["libs/glibby-core/*.md"]
+            "project": "libs/glibby-core/package.json",
+            "entryFile": "libs/glibby-core/src/index.ts",
+            "external": ["react", "react-dom"],
+            "rollupConfig": "@nrwl/react/plugins/bundle-rollup",
+            "assets": [
+              {
+                "glob": "libs/glibby-core/README.md",
+                "input": ".",
+                "output": "."
+              }
+            ]
           }
         },
         "lint": {
           "executor": "@nrwl/linter:eslint",
           "options": {
-            "lintFilePatterns": ["libs/glibby-core/**/*.ts"]
+            "lintFilePatterns": ["libs/glibby-core/**/*.{ts,tsx,js,jsx}"]
           }
         },
         "test": {

@@ -6,8 +6,8 @@
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "parserOptions": {
         "project": [
-          "libs/glibby-core/tsconfig.*?.json",
-          "libs/glibby-core/.storybook/tsconfig.json"
+          "libs/glibby-grid-animation/tsconfig.*?.json",
+          "libs/glibby-grid-animation/.storybook/tsconfig.json"
         ]
       },
       "rules": {}

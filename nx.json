@@ -32,6 +32,9 @@
       "tags": [],
       "implicitDependencies": ["glibby-site"]
     },
+    "glibby-grid-animation": {
+      "tags": []
+    },
     "glibby-core": {
       "tags": []
     }
