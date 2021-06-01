@@ -1,6 +1,7 @@
 export type GridOptions = {
   width: number;
   height?: number;
+  id?: string | number;
 };
 
 export type GridLayout = {
@@ -8,6 +9,8 @@ export type GridLayout = {
   y: number;
   width: number;
   height: number;
+
+  className?: string;
 };
 
 export type GridPosition = {
@@ -23,6 +26,7 @@ export type GridItem = {
 export type GridData = {
   width: number;
   height?: number;
+  id: string | number;
 
   items: Array<GridItem>;
 };
@@ -30,9 +34,6 @@ export type GridData = {
 export type Grid = {
   data: GridData;
 
-  set: (
-    layoutOrPosition: GridLayout | GridPosition,
-    item: Omit<GridItem, 'layout'> & Partial<Pick<GridItem, 'layout'>>
-  ) => Grid;
+  set: (layout: GridLayout, item: GridItem) => Grid;
   remove: (id: GridItem['id']) => Grid;
 };

@@ -54,21 +54,21 @@ export const packGrid = (
   let updated = items;
 
   // All boxes on the same row and above the origin are considered fixed
-  let packSet: Array<GridItem> = [];
+  let packItems: Array<GridItem> = [];
   const fixed: Set<string> = new Set();
 
   updated.forEach((item) => {
     if (item.layout.y <= origin.y) {
       getLayoutCoords(item.layout).forEach((c) => fixed.add(c));
     } else {
-      packSet.push(item);
+      packItems.push(item);
     }
   });
 
-  packSet = packSet.sort((a, b) => a.layout.y - b.layout.y);
+  packItems = packItems.sort((a, b) => a.layout.y - b.layout.y);
   let watchdogCount = 0;
 
-  while (packSet.length) {
+  while (packItems.length) {
     watchdogCount++;
 
     if (watchdogCount > 5) {
@@ -77,14 +77,17 @@ export const packGrid = (
     }
 
     const nextPackSet: Array<GridItem> = [];
-    for (const item of packSet) {
+    for (const item of packItems) {
       const rowAboveCoords = getLayoutCoords({
         ...item.layout,
         height: 1,
         y: item.layout.y - 1,
       });
 
-      if (rowAboveCoords.some((coord) => fixed.has(coord))) {
+      if (
+        item.layout.y === 1 ||
+        rowAboveCoords.some((coord) => fixed.has(coord))
+      ) {
         // This item is blocked by at least one fixed item. Add it to fixed items and dont add it to the next packset
         getLayoutCoords(item.layout).forEach((c) => fixed.add(c));
       } else {
@@ -104,10 +107,31 @@ export const packGrid = (
       }
     }
 
-    packSet = nextPackSet;
+    packItems = nextPackSet;
   }
 
   console.log('Finished after', watchdogCount, 'iterations');
+
+  return updated;
+};
+
+/**
+ * Displaces all affected items below of the indicated area
+ * @param items All items in grid
+ * @param displayedLayout area to displace
+ * @returns displaced items
+ */
+export const displace = (
+  items: Array<GridItem>,
+  displayedLayout: GridLayout
+): Array<GridItem> => {
+  const updated = items.map((item) =>
+    update(item, {
+      layout: {
+        y: { $set: item.layout.y + displayedLayout.height },
+      },
+    })
+  );
 
   return updated;
 };
