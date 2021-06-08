@@ -36,4 +36,5 @@ export type Grid = {
 
   set: (layout: GridLayout, item: GridItem) => Grid;
   remove: (id: GridItem['id']) => Grid;
+  boundingBox: () => GridLayout;
 };

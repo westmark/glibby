@@ -16,7 +16,8 @@ import { GridItem, makeGrid, upsertStyle } from '@glibby/core';
 import './grid.css';
 import { Grid, GridProps } from './Grid';
 import classNames from 'classnames';
-import { DndContext, DragOverEvent } from '@dnd-kit/core';
+import { closestCorners, DndContext, DragOverEvent } from '@dnd-kit/core';
+import { gridCollisionStrategy } from './collisionStrategy';
 
 export default { title: 'Default' };
 
@@ -78,13 +79,17 @@ export const Droppable = () => {
       { id: id++, layout: { x: 2, y: 1, width: 1, height: 1 } },
       { id: id++, layout: { x: 3, y: 1, width: 1, height: 1 } },
 
-      { id: id++, layout: { x: 1, y: 2, width: 3, height: 1 } },
+      { id: id++, layout: { x: 1, y: 2, width: 1, height: 1 } },
+      { id: id++, layout: { x: 2, y: 2, width: 1, height: 1 } },
+      { id: id++, layout: { x: 3, y: 2, width: 1, height: 1 } },
 
-      { id: id++, layout: { x: 1, y: 3, width: 1, height: 1 } },
-      { id: id++, layout: { x: 2, y: 3, width: 1, height: 1 } },
-      { id: id++, layout: { x: 3, y: 3, width: 1, height: 1 } },
+      { id: id++, layout: { x: 1, y: 3, width: 3, height: 1 } },
 
-      { id: id++, layout: { x: 2, y: 4, width: 2, height: 1 } },
+      { id: id++, layout: { x: 1, y: 4, width: 1, height: 1 } },
+      { id: id++, layout: { x: 2, y: 4, width: 1, height: 1 } },
+      { id: id++, layout: { x: 3, y: 4, width: 1, height: 1 } },
+
+      { id: id++, layout: { x: 2, y: 5, width: 2, height: 1 } },
     ]
   );
 
@@ -104,7 +109,7 @@ export const Droppable = () => {
 
   return (
     <Container>
-      <DndContext>
+      <DndContext collisionDetection={gridCollisionStrategy}>
         <StyledGrid grid={grid} getContent={getContent} />
       </DndContext>
     </Container>
@@ -113,7 +118,6 @@ export const Droppable = () => {
 
 const Container = styled.div`
   display: flex;
-  justify-content: center;
   padding: 50px;
 `;
 

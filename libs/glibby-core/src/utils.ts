@@ -53,17 +53,19 @@ export const packGrid = (
 ): Array<GridItem> => {
   let updated = items;
 
-  // All boxes on the same row and above the origin are considered fixed
+  // All boxes above the origin are considered fixed
   let packItems: Array<GridItem> = [];
   const fixed: Set<string> = new Set();
 
   updated.forEach((item) => {
-    if (item.layout.y <= origin.y) {
+    if (item.layout.y < origin.y || item.layout.y === 1) {
       getLayoutCoords(item.layout).forEach((c) => fixed.add(c));
     } else {
       packItems.push(item);
     }
   });
+
+  fixed.add(coords(origin));
 
   packItems = packItems.sort((a, b) => a.layout.y - b.layout.y);
   let watchdogCount = 0;
@@ -125,18 +127,32 @@ export const displace = (
   items: Array<GridItem>,
   displayedLayout: GridLayout
 ): Array<GridItem> => {
-  const updated = items.map((item) =>
-    update(item, {
+  const updated = items.map((item) => {
+    const targetY =
+      item.layout.y >= displayedLayout.y
+        ? item.layout.y + displayedLayout.height
+        : item.layout.y;
+
+    return update(item, {
       layout: {
         y: {
-          $set:
-            item.layout.y >= displayedLayout.y
-              ? item.layout.y + displayedLayout.height
-              : item.layout.y,
+          $set: targetY,
         },
       },
-    })
-  );
+    });
+  });
 
   return updated;
+};
+
+export const canContainLayout = (
+  layoutToFit: GridLayout,
+  staticLayout: GridLayout
+) => {
+  return (
+    layoutToFit.x >= staticLayout.x &&
+    layoutToFit.y >= staticLayout.y &&
+    layoutToFit.x + layoutToFit.width <= staticLayout.x + staticLayout.width &&
+    layoutToFit.y + layoutToFit.height <= staticLayout.y + staticLayout.height
+  );
 };

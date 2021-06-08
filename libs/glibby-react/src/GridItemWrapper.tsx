@@ -5,30 +5,23 @@ import { useDroppable } from '@dnd-kit/core';
 import { GetContent } from './types';
 import { GridItemDraggable } from './GridItemDraggable';
 
-export interface GridItemDroppableProps {
+export interface GridItemWrapperProps {
   gridItem: GridItem;
   className?: string;
   getContent?: GetContent;
 }
 
-export const GridItemDroppable: FunctionComponent<GridItemDroppableProps> = ({
+export const GridItemWrapper: FunctionComponent<GridItemWrapperProps> = ({
   gridItem,
   className,
   getContent,
 }) => {
-  const { isOver, setNodeRef } = useDroppable({
-    data: { id: gridItem.id },
-    id: gridItem.id.toString(),
-  });
-
   const content = getContent?.(gridItem);
 
   return (
     <div
-      ref={setNodeRef}
       className={classNames(
-        'glibby-grid-item-droppable',
-        isOver && 'glibby-grid-item-droppable__drag-over',
+        'glibby-grid-item-wrapper',
         gridItem?.layout?.className,
         className
       )}
