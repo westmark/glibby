@@ -1,6 +1,13 @@
 import update from 'immutability-helper';
 
-import { displace, packGrid, removeGridItem } from './utils';
+import {
+  coords,
+  displace,
+  getLayoutCoords,
+  isOccupied,
+  packGrid,
+  removeGridItem,
+} from './utils';
 
 import type {
   Grid,
@@ -8,6 +15,7 @@ import type {
   GridItem,
   GridLayout,
   GridOptions,
+  GridPosition,
 } from './types';
 
 export const makeGrid = (
@@ -33,6 +41,10 @@ export const makeGrid = (
 
       updatedItems = displace(updatedItems, layout);
 
+      // Now make sure there is room for this. Otherwise, exit early
+      if (isOccupied(updatedItems, layout)) {
+        return this;
+      }
       updatedItems = update(updatedItems, {
         $push: [update(item, { layout: { $set: layout } })],
       }).sort((a, b) => a.layout.y - b.layout.y);
@@ -74,6 +86,10 @@ export const makeGrid = (
       });
 
       return layout;
+    },
+
+    isOccupied(layout: GridLayout) {
+      return isOccupied(this.data.items, layout);
     },
   };
 

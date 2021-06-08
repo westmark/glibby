@@ -127,7 +127,7 @@ export const displace = (
 ): Array<GridItem> => {
   const updated = items.map((item) => {
     const targetY =
-      item.layout.y >= displayedLayout.y
+      item.layout.y + item.layout.height > displayedLayout.y
         ? item.layout.y + displayedLayout.height
         : item.layout.y;
 
@@ -153,4 +153,12 @@ export const canContainLayout = (
     layoutToFit.x + layoutToFit.width <= staticLayout.x + staticLayout.width &&
     layoutToFit.y + layoutToFit.height <= staticLayout.y + staticLayout.height
   );
+};
+
+export const isOccupied = (items: Array<GridItem>, layout: GridLayout) => {
+  const c = getLayoutCoords(layout);
+  return items.some((item) => {
+    const cs = getLayoutCoords(item.layout);
+    return c.some((ci) => cs.includes(ci));
+  });
 };

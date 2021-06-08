@@ -124,6 +124,8 @@ const Container = styled.div`
 
 const StyledGrid = styled(Grid)`
   grid-gap: 5px;
+  grid-template-columns: repeat(5, 1fr);
+  grid-template-rows: repeat(100, 1fr);
 `;
 
 const GridItemBox = styled.div`

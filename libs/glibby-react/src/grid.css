@@ -1,11 +1,13 @@
 .glibby-grid-outer-wrapper {
   position: relative;
+  grid-template-columns: min-content;
+  grid-template-rows: min-content;
 }
 
 .glibby-grid-container {
   display: grid;
-  grid-template-columns: min-content;
-  grid-template-rows: min-content;
+  grid-template-columns: inherit;
+  grid-template-rows: inherit;
   grid-gap: inherit;
 }
 
