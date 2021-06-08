@@ -28,7 +28,7 @@ export const makeGrid = (
         updatedItems = update(updatedItems, {
           $splice: [[updatedItems.findIndex((i) => i.id === item.id), 1]],
         });
-        updatedItems = packGrid(updatedItems, layout);
+        //updatedItems = packGrid(updatedItems);
       }
 
       updatedItems = displace(updatedItems, layout);
@@ -37,7 +37,7 @@ export const makeGrid = (
         $push: [update(item, { layout: { $set: layout } })],
       }).sort((a, b) => a.layout.y - b.layout.y);
 
-      updatedItems = packGrid(updatedItems, layout);
+      updatedItems = packGrid(updatedItems);
 
       return makeGrid(options, updatedItems);
     },

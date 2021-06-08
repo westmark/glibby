@@ -78,6 +78,7 @@ export const Droppable = () => {
       { id: id++, layout: { x: 1, y: 1, width: 1, height: 1 } },
       { id: id++, layout: { x: 2, y: 1, width: 1, height: 1 } },
       { id: id++, layout: { x: 3, y: 1, width: 1, height: 1 } },
+      { id: id++, layout: { x: 4, y: 1, width: 1, height: 3 } },
 
       { id: id++, layout: { x: 1, y: 2, width: 1, height: 1 } },
       { id: id++, layout: { x: 2, y: 2, width: 1, height: 1 } },

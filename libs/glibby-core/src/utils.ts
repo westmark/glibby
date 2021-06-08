@@ -65,8 +65,6 @@ export const packGrid = (
     }
   });
 
-  fixed.add(coords(origin));
-
   packItems = packItems.sort((a, b) => a.layout.y - b.layout.y);
   let watchdogCount = 0;
 
@@ -112,7 +110,7 @@ export const packGrid = (
     packItems = nextPackSet;
   }
 
-  console.log('Finished after', watchdogCount, 'iterations');
+  // console.log('Finished after', watchdogCount, 'iterations');
 
   return updated;
 };

@@ -44,7 +44,7 @@ export const GridItemDraggable: FunctionComponent<GridItemDraggableProps> = ({
         className
       )}
     >
-      {children}
+      <div className="glibby-grid-item-draggable__content">{children}</div>
     </div>
   );
 };
