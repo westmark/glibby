@@ -1,0 +1,43 @@
+.glibby-grid-container {
+  display: grid;
+  grid-template-columns: min-content;
+  grid-template-rows: min-content;
+}
+
+.glibby-grid-item-droppable {
+  width: 100%;
+  min-width: 50px;
+  height: 100%;
+  min-height: 100%;
+}
+
+.glibby-grid-item-droppable.glibby-grid-item-droppable__drag-over {
+  background-color: rgba(255, 0, 0, 0.1);
+}
+
+.glibby-grid-item-draggable {
+  width: 100%;
+  height: 100%;
+  position: relative;
+}
+
+.glibby-grid-item-draggable:after {
+  position: absolute;
+  content: '';
+  top: -2px;
+  bottom: -2px;
+  left: -2px;
+  right: -2px;
+  pointer-events: none;
+  opacity: 0;
+  border: 2px dashed #22001133;
+  transition: opacity 0.3s linear;
+}
+
+.glibby-grid-item-draggable:hover:after:not(.glibby-grid-item-draggable__dragging) {
+  opacity: 1;
+}
+
+.glibby-grid-item-draggable.glibby-grid-item-draggable__dragging {
+  grid-area: initial !important;
+}

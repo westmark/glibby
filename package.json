@@ -27,7 +27,9 @@
   },
   "private": true,
   "dependencies": {
+    "@dnd-kit/core": "^3.0.4",
     "@popmotion/easing": "^1.0.2",
+    "classnames": "^2.3.1",
     "core-js": "^3.6.5",
     "document-register-element": "1.13.1",
     "framesync": "^5.3.0",

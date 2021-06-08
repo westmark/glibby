@@ -128,7 +128,12 @@ export const displace = (
   const updated = items.map((item) =>
     update(item, {
       layout: {
-        y: { $set: item.layout.y + displayedLayout.height },
+        y: {
+          $set:
+            item.layout.y >= displayedLayout.y
+              ? item.layout.y + displayedLayout.height
+              : item.layout.y,
+        },
       },
     })
   );

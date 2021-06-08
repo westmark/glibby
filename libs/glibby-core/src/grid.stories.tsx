@@ -289,6 +289,74 @@ export const InsertItemWithAnimation = () => {
   );
 };
 
+export const MoveItemWithAnimation = () => {
+  const gridRef = useRef<HTMLDivElement>() as RefObject<HTMLDivElement>;
+  let id = 1;
+  const grid = makeGrid(
+    {
+      width: 5,
+      height: 5,
+    },
+    [
+      { id: id++, layout: { x: 1, y: 1, width: 1, height: 1 } },
+      { id: id++, layout: { x: 2, y: 1, width: 1, height: 1 } },
+      { id: id++, layout: { x: 3, y: 1, width: 1, height: 1 } },
+
+      { id: id++, layout: { x: 1, y: 2, width: 1, height: 1 } },
+      { id: id++, layout: { x: 2, y: 2, width: 1, height: 1 } },
+      { id: id++, layout: { x: 3, y: 2, width: 1, height: 1 } },
+
+      { id: id++, layout: { x: 3, y: 3, width: 2, height: 1 } },
+    ]
+  );
+
+  const [gridState, setGridState] = useState(grid);
+
+  upsertStyle(gridState);
+
+  useEffect(() => {
+    if (gridRef.current) {
+      wrapGrid(gridRef.current, {
+        easing: 'backOut',
+        stagger: 10,
+        duration: 700,
+      });
+    }
+  }, []);
+
+  return (
+    <div>
+      <button
+        onClick={() =>
+          setGridState((old) =>
+            old.set(
+              { height: 3, width: 2, x: 2, y: 1 },
+              {
+                id: 7,
+                layout: { x: 3, y: 3, width: 2, height: 1 },
+              }
+            )
+          )
+        }
+      >
+        Move 7
+      </button>
+      <Container>
+        <GridContainer ref={gridRef}>
+          {gridState.data.items.map((item) => (
+            <Item
+              key={(item.id as string).toString()}
+              className={item.layout.className}
+            >
+              {item.id as string}
+            </Item>
+          ))}
+        </GridContainer>
+      </Container>
+    </div>
+  );
+};
+
 const Container = styled.div`
   display: flex;
   justify-content: center;

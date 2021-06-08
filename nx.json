@@ -37,6 +37,9 @@
     },
     "glibby-core": {
       "tags": []
+    },
+    "glibby-react": {
+      "tags": []
     }
   }
 }

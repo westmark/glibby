@@ -3,5 +3,6 @@ module.exports = {
     '<rootDir>/apps/glibby-site',
     '<rootDir>/libs/glibby-grid-animation',
     '<rootDir>/libs/glibby-core',
+    '<rootDir>/libs/glibby-react',
   ],
 };

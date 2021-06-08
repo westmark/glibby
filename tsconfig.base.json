@@ -16,7 +16,8 @@
     "baseUrl": ".",
     "paths": {
       "@glibby/grid-animation": ["libs/glibby-grid-animation/src/index.ts"],
-      "@glibby/core": ["libs/glibby-core/src/index.ts"]
+      "@glibby/core": ["libs/glibby-core/src/index.ts"],
+      "@glibby/react": ["libs/glibby-react/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]

@@ -3,6 +3,7 @@ import update from 'immutability-helper';
 import { displace, packGrid, removeGridItem } from './utils';
 
 import type { Grid, GridData, GridItem, GridOptions } from './types';
+
 export const makeGrid = (
   options: GridOptions,
   initialItems: Array<GridItem> = []
@@ -18,7 +19,9 @@ export const makeGrid = (
     set(layout, item) {
       let updatedItems = this.data.items;
       if (updatedItems.find((i) => i.id === item.id)) {
-        // Item already exists, first remove it from the layout
+        updatedItems = update(updatedItems, {
+          $splice: [[updatedItems.findIndex((i) => i.id === item.id), 1]],
+        });
       }
 
       updatedItems = displace(updatedItems, layout);
