@@ -47,8 +47,10 @@ export const gridCollisionStrategy: CollisionDetection = (entries, target) => {
     );
 
     if (
-      entryCorners[1].x > corners[0].x &&
-      entryCorners[0].x < corners[1].x &&
+      (isBetween(corners[0].x, entryCorners[0].x, entryCorners[1].x) ||
+        isBetween(corners[1].x, entryCorners[0].x, entryCorners[1].x) ||
+        (corners[0].x <= entryCorners[0].x &&
+          corners[1].x >= entryCorners[1].x)) &&
       (isBetween(corners[2].y, entryCorners[0].y, entryCorners[2].y) ||
         isBetween(corners[0].y, entryCorners[0].y, entryCorners[2].y) ||
         (corners[0].y <= entryCorners[0].y &&

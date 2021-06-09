@@ -26,10 +26,6 @@ export const removeGridItem = (
     updated = update(items, { $splice: [[index, 1]] });
   }
 
-  if (pack) {
-    updated = packGrid(updated, item.layout);
-  }
-
   return updated;
 };
 

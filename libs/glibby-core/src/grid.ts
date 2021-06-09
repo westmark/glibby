@@ -1,13 +1,6 @@
 import update from 'immutability-helper';
 
-import {
-  coords,
-  displace,
-  getLayoutCoords,
-  isOccupied,
-  packGrid,
-  removeGridItem,
-} from './utils';
+import { displace, isOccupied, packGrid, removeGridItem } from './utils';
 
 import type {
   Grid,
@@ -15,7 +8,6 @@ import type {
   GridItem,
   GridLayout,
   GridOptions,
-  GridPosition,
 } from './types';
 
 export const makeGrid = (
@@ -36,7 +28,6 @@ export const makeGrid = (
         updatedItems = update(updatedItems, {
           $splice: [[updatedItems.findIndex((i) => i.id === item.id), 1]],
         });
-        //updatedItems = packGrid(updatedItems);
       }
 
       updatedItems = displace(updatedItems, layout);
@@ -59,6 +50,7 @@ export const makeGrid = (
       const removeItem = updatedItems.find((i) => i.id === id);
       if (removeItem) {
         updatedItems = removeGridItem(removeItem, updatedItems);
+        updatedItems = packGrid(updatedItems, removeItem.layout);
       }
 
       return makeGrid(options, updatedItems);
