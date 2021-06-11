@@ -68,3 +68,45 @@
 .glibby-grid-drag-overlay {
   cursor: move;
 }
+
+.glibby-grid-item-wrapper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.glibby-grid-item-wrapper__inner {
+  height: 100%;
+  width: 100%;
+}
+
+.glibby-grid-item-wrapper__resizer {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  background-color: rgba(0, 0, 255, 0.2);
+}
+
+.glibby-grid-item-wrapper__resizer--nw {
+  top: 0;
+  left: 0;
+  cursor: nwse-resize;
+}
+
+.glibby-grid-item-wrapper__resizer--ne {
+  top: 0;
+  right: 0;
+  cursor: nesw-resize;
+}
+
+.glibby-grid-item-wrapper__resizer--se {
+  bottom: 0;
+  right: 0;
+  cursor: nwse-resize;
+}
+
+.glibby-grid-item-wrapper__resizer--sw {
+  bottom: 0;
+  left: 0;
+  cursor: nesw-resize;
+}

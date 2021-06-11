@@ -1,3 +1,7 @@
+import './grid.css';
+
+import { GridItem, makeGrid } from '@glibby/core';
+import classNames from 'classnames';
 import React, {
   FunctionComponent,
   RefObject,
@@ -7,17 +11,9 @@ import React, {
   useState,
 } from 'react';
 import styled from 'styled-components';
-import { wrapGrid } from '@glibby/grid-animation';
 
-import { text, number } from '@storybook/addon-knobs';
-
-import { GridItem, makeGrid, upsertStyle } from '@glibby/core';
-
-import './grid.css';
-import { Grid, GridProps } from './Grid';
-import classNames from 'classnames';
-import { closestCorners, DndContext, DragOverEvent } from '@dnd-kit/core';
-import { gridCollisionStrategy } from './collisionStrategy';
+import { Grid } from './Grid';
+import { GridDndContext } from './GridDndContext';
 
 export default { title: 'Default' };
 
@@ -71,8 +67,8 @@ export const Droppable = () => {
   let id = 1;
   const grid = makeGrid(
     {
-      width: 5,
-      height: 5,
+      width: 7,
+      height: 7,
     },
     [
       { id: id++, layout: { x: 1, y: 1, width: 1, height: 1 } },
@@ -90,7 +86,11 @@ export const Droppable = () => {
       { id: id++, layout: { x: 2, y: 4, width: 1, height: 1 } },
       { id: id++, layout: { x: 3, y: 4, width: 1, height: 1 } },
 
-      { id: id++, layout: { x: 2, y: 5, width: 2, height: 1 } },
+      {
+        id: id++,
+        layout: { x: 2, y: 5, width: 2, height: 1 },
+        resizable: true,
+      },
     ]
   );
 
@@ -110,9 +110,9 @@ export const Droppable = () => {
 
   return (
     <Container>
-      <DndContext collisionDetection={gridCollisionStrategy}>
+      <GridDndContext>
         <StyledGrid grid={grid} getContent={getContent} />
-      </DndContext>
+      </GridDndContext>
     </Container>
   );
 };

@@ -18,6 +18,7 @@ import React, {
 
 import { GridItemWrapper, GridItemWrapperProps } from './GridItemWrapper';
 import { GridOverlay } from './GridOverlay';
+import { Corner } from './types';
 
 export interface GridProps extends Pick<GridItemWrapperProps, 'getContent'> {
   grid: GridType;
@@ -31,26 +32,57 @@ export const Grid: FunctionComponent<GridProps> = ({
 }) => {
   const [grid, setGrid] = useState(upsertStyle(initialGrid));
   const [activeId, setActiveId] = useState();
+  const [dragCorner, setDragCorner] = useState<Corner>();
 
   const handleDragOver = useCallback((event: DragOverEvent) => {
     setGrid((old) => {
       const active = old.data.items.find(
         (item) => item.id === event.active.data?.current?.id
       );
+      const corner = event.active.data?.current?.corner;
       const over = event.over?.data.current;
 
       if (active && over) {
-        const updatedGrid = old.set(
-          {
-            x: over.layout.x,
-            y: over.layout.y,
-            width: active.layout.width,
-            height: active.layout.height,
-          },
-          active
-        );
+        if (corner) {
+          const targetLayout = { ...active.layout };
+          if (corner === 'se') {
+            targetLayout.width = over.layout.x - targetLayout.x + 1;
+            targetLayout.height = over.layout.y - targetLayout.y + 1;
+          } else if (corner === 'ne') {
+            targetLayout.width = over.layout.x - targetLayout.x + 1;
+            const yDiff = targetLayout.y - over.layout.y;
+            targetLayout.height += yDiff;
+            targetLayout.y -= yDiff;
+          } else if (corner === 'nw') {
+            const xDiff = targetLayout.x - over.layout.x;
+            targetLayout.width += xDiff;
+            targetLayout.x -= xDiff;
+            const yDiff = targetLayout.y - over.layout.y;
+            targetLayout.height += yDiff;
+            targetLayout.y -= yDiff;
+          } else if (corner === 'sw') {
+            const xDiff = targetLayout.x - over.layout.x;
+            targetLayout.width += xDiff;
+            targetLayout.x -= xDiff;
+            targetLayout.height = over.layout.y - targetLayout.y + 1;
+          }
 
-        return upsertStyle(updatedGrid);
+          const updatedGrid = old.set(targetLayout, active);
+
+          return upsertStyle(updatedGrid);
+        } else {
+          const updatedGrid = old.set(
+            {
+              x: over.layout.x,
+              y: over.layout.y,
+              width: active.layout.width,
+              height: active.layout.height,
+            },
+            active
+          );
+
+          return upsertStyle(updatedGrid);
+        }
       }
       return old;
     });
@@ -58,9 +90,13 @@ export const Grid: FunctionComponent<GridProps> = ({
 
   const handleDragStart = useCallback((event: DragStartEvent) => {
     setActiveId(event.active.data.current?.id);
+    setDragCorner(event.active.data.current?.corner);
   }, []);
 
-  const handleDragEnd = useCallback(() => setActiveId(undefined), []);
+  const handleDragEnd = useCallback(() => {
+    setActiveId(undefined);
+    setDragCorner(undefined);
+  }, []);
 
   useDndMonitor({
     onDragStart: handleDragStart,
@@ -95,7 +131,7 @@ export const Grid: FunctionComponent<GridProps> = ({
       </div>
       {activeId ? <GridOverlay boundingBox={boundingBox} /> : null}
       <DragOverlay>
-        {activeId && getContent ? (
+        {activeId && !dragCorner && getContent ? (
           <div className="glibby-grid-drag-overlay">
             {getContent(grid?.data.items.find((i) => i.id === activeId))}
           </div>

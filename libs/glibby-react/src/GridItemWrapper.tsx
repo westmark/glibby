@@ -4,6 +4,7 @@ import React, { FunctionComponent } from 'react';
 import { useDroppable } from '@dnd-kit/core';
 import { GetContent } from './types';
 import { GridItemDraggable } from './GridItemDraggable';
+import { GridItemResizer } from './GridItemResizer';
 
 export interface GridItemWrapperProps {
   gridItem: GridItem;
@@ -26,9 +27,19 @@ export const GridItemWrapper: FunctionComponent<GridItemWrapperProps> = ({
         className
       )}
     >
-      {content ? (
-        <GridItemDraggable gridItem={gridItem}>{content}</GridItemDraggable>
-      ) : null}
+      <div className="glibby-grid-item-wrapper__inner">
+        {content ? (
+          <GridItemDraggable gridItem={gridItem}>{content}</GridItemDraggable>
+        ) : null}
+        {gridItem.resizable ? (
+          <>
+            <GridItemResizer corner="nw" id={gridItem.id} />
+            <GridItemResizer corner="ne" id={gridItem.id} />
+            <GridItemResizer corner="sw" id={gridItem.id} />
+            <GridItemResizer corner="se" id={gridItem.id} />
+          </>
+        ) : null}
+      </div>
     </div>
   );
 };

@@ -14,24 +14,12 @@ export const GridItemDraggable: FunctionComponent<GridItemDraggableProps> = ({
   className,
   children,
 }) => {
-  const {
-    attributes,
-    listeners,
-    setNodeRef,
-    transform,
-    isDragging,
-  } = useDraggable({
+  const { attributes, listeners, setNodeRef, isDragging } = useDraggable({
     data: {
       id: gridItem.id,
     },
     id: gridItem.id.toString(),
   });
-
-  const style = transform
-    ? {
-        transform: `translate3d(${transform.x}px, ${transform.y}px, 0)`,
-      }
-    : undefined;
 
   return (
     <div

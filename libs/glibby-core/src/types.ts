@@ -21,6 +21,7 @@ export type GridPosition = {
 export type GridItem = {
   layout: GridLayout;
   id: string | number;
+  resizable?: boolean;
 };
 
 export type GridData = {
